@@ -1,0 +1,49 @@
+{
+  "name": "Quick PiP",
+  "description": "Enhances the “Picture-in-Picture” experience",
+  "version": "26.0",
+  "manifest_version": 3,
+  "icons": {
+    "128": "assets/icon.png"
+  },
+  "background": {
+    "service_worker": "main.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "scripts/lib/video.js",
+        "scripts/lib/pip.js",
+        "scripts/lib/settings.js",
+        "scripts/utils.js",
+        "scripts/trigger-auto-pip.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_title": "Picture-in-Picture",
+    "default_icon": "assets/icon.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "scripting",
+    "storage",
+    "tabs",
+    "activeTab"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "minimum_chrome_version": "134",
+  "author": "Alex Potenza",
+  "homepage_url": "https://github.com/apotenza92/chrome-auto-pip"
+}

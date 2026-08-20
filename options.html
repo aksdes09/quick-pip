@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Settings</title>
+        <style>
+            body {
+                font-family:
+                    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                    sans-serif;
+                margin: 0;
+                padding: 20px;
+                background: #f8f9fa;
+                min-width: 400px;
+            }
+
+            .container {
+                background: white;
+                padding: 24px;
+                border-radius: 8px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            }
+
+            h1 {
+                margin: 0 0 24px 0;
+                color: #1a1a1a;
+                font-size: 24px;
+                font-weight: 600;
+            }
+
+            .setting {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 16px 0;
+                border-bottom: 1px solid #e5e7eb;
+            }
+
+            .setting:last-child {
+                border-bottom: none;
+            }
+
+            .setting.setting-vertical {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .setting-info {
+                flex: 1;
+            }
+
+            .setting-title {
+                font-size: 16px;
+                font-weight: 500;
+                color: #1a1a1a;
+                margin: 0 0 4px 0;
+            }
+
+            .setting-description {
+                font-size: 14px;
+                color: #6b7280;
+                margin: 0;
+            }
+
+            .setting-note {
+                font-size: 14px;
+                color: #6b7280;
+                margin-top: 4px;
+            }
+
+            .setting-control {
+                margin-left: 16px;
+                align-self: center;
+            }
+
+            .toggle {
+                position: relative;
+                display: inline-block;
+                width: 48px;
+                height: 24px;
+            }
+
+            .toggle input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+            .slider {
+                position: absolute;
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: #d1d5db;
+                transition: 0.3s;
+                border-radius: 24px;
+            }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 18px;
+                width: 18px;
+                left: 3px;
+                bottom: 3px;
+                background-color: white;
+                transition: 0.3s;
+                border-radius: 50%;
+            }
+
+            input:checked + .slider {
+                background-color: #3b82f6;
+            }
+
+            input:checked + .slider:before {
+                transform: translateX(24px);
+            }
+
+            .toggle input:disabled + .slider {
+                opacity: 0.55;
+                cursor: not-allowed;
+            }
+
+            .setting-note.warning {
+                color: #92400e;
+            }
+
+            .status-panel {
+                display: none;
+                margin: 0 0 16px 0;
+                padding: 12px;
+                border: 1px solid #f59e0b;
+                border-radius: 8px;
+                background: #fffbeb;
+                color: #78350f;
+                font-size: 13px;
+                line-height: 1.45;
+            }
+
+            .status-panel strong {
+                display: block;
+                margin-bottom: 4px;
+                color: #92400e;
+            }
+
+            select {
+                padding: 8px 12px;
+                border: 1px solid #d1d5db;
+                border-radius: 6px;
+                background: white;
+                font-size: 14px;
+                color: #1a1a1a;
+                cursor: pointer;
+                min-width: 80px;
+            }
+
+            select:focus {
+                outline: none;
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+
+            .setting-controls {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .site-row {
+                display: grid;
+                grid-template-columns: 140px minmax(0, 220px) auto;
+                align-items: center;
+                gap: 8px;
+                width: 100%;
+                justify-content: start;
+            }
+
+            .site-row.site-row-manual {
+                grid-template-columns: 140px minmax(0, 180px) auto;
+            }
+
+            #manualSiteInput {
+                max-width: 119px;
+                justify-self: start;
+            }
+
+            .site-row label {
+                font-size: 14px;
+                color: #374151;
+            }
+
+            .site-row input,
+            .site-row select {
+                width: 100%;
+                min-width: 0;
+            }
+
+            .site-row input {
+                padding: 8px 12px;
+                border: 1px solid #d1d5db;
+                border-radius: 6px;
+                font-size: 14px;
+                color: #1a1a1a;
+            }
+
+            .site-row input:focus {
+                outline: none;
+                border-color: #3b82f6;
+                box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            }
+
+            .button {
+                padding: 8px 12px;
+                border: 1px solid #d1d5db;
+                border-radius: 6px;
+                background: #f9fafb;
+                color: #111827;
+                font-size: 14px;
+                cursor: pointer;
+                white-space: nowrap;
+            }
+
+            .button:hover {
+                background: #f3f4f6;
+            }
+
+            .button:disabled {
+                opacity: 0.6;
+                cursor: not-allowed;
+            }
+
+            .button.button-small {
+                padding: 6px 10px;
+                font-size: 13px;
+            }
+
+            .site-list {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .site-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 8px 12px;
+                border: 1px solid #e5e7eb;
+                border-radius: 6px;
+                background: #f9fafb;
+                font-size: 14px;
+            }
+
+            .site-item span {
+                color: #111827;
+            }
+
+            .debug-actions {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                margin-top: 8px;
+            }
+
+            .button:disabled {
+                color: #9ca3af;
+                cursor: not-allowed;
+                background: #f9fafb;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <h1>Options</h1>
+
+            <div class="status-panel" id="autoPipBlockerStatus"></div>
+
+            <div class="setting">
+                <div class="setting-info">
+                    <div class="setting-title">Auto PiP on Tab Switch</div>
+                    <div class="setting-description">
+                        Automatically activate PiP when switching to a different
+                        tab in the same window.
+                    </div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="autoPipOnTabSwitch" />
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting">
+                <div class="setting-info">
+                    <div class="setting-title">Debug Logs</div>
+                    <div class="debug-actions">
+                        <button class="button" id="downloadDebugLog">Download .txt</button>
+                    </div>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="autoPipDebugEnabled" />
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting setting-vertical" id="blockedSitesSetting">
+                <div class="setting-info">
+                    <div class="setting-title">Disabled Sites</div>
+                    <div class="setting-description">
+                        Auto PiP will not run on these domains. Use a
+                        <code>*.</code> prefix to include subdomains (e.g.
+                        <code>*.zoom.us</code>).
+                    </div>
+                </div>
+                <div class="setting-controls">
+                    <div class="site-row">
+                        <label for="currentSiteSelect">Add an open site</label>
+                        <select id="currentSiteSelect">
+                            <option value="">Select a site</option>
+                        </select>
+                        <button class="button" id="addCurrentSite">Add</button>
+                    </div>
+                    <div class="site-row site-row-manual">
+                        <label for="manualSiteInput">Add manually</label>
+                        <input id="manualSiteInput" type="text" />
+                        <button class="button" id="addManualSite">Add</button>
+                    </div>
+                </div>
+                <div class="site-list" id="blockedSitesList"></div>
+            </div>
+
+        </div>
+
+        <script src="options.js"></script>
+    </body>
+</html>
