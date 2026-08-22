@@ -1,6 +1,6 @@
 {
   "name": "Quick PiP",
-  "description": "Enhances the “Picture-in-Picture” experience",
+  "description": "Improves the “Picture-in-Picture” viewing experience for Chromium-based browsers.",
   "version": "26.0",
   "manifest_version": 3,
   "icons": {
@@ -46,6 +46,5 @@
     }
   ],
   "minimum_chrome_version": "134",
-  "author": "Alex Potenza",
-  "homepage_url": "https://github.com/apotenza92/chrome-auto-pip"
+  "author": "aksdes, Alex Potenza"
 }
