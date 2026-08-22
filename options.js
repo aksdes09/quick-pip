@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     const autoPipOnTabSwitchToggle = document.getElementById('autoPipOnTabSwitch');
+    const pipButtonEnabledToggle = document.getElementById('pipButtonEnabled');
     const currentSiteSelect = document.getElementById('currentSiteSelect');
     const addCurrentSiteButton = document.getElementById('addCurrentSite');
     const manualSiteInput = document.getElementById('manualSiteInput');
@@ -23,6 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     let blockedSites = DEFAULT_BLOCKED_SITES.slice();
 
     autoPipOnTabSwitchToggle.disabled = true;
+    pipButtonEnabledToggle.disabled = true;
     autoPipDebugEnabledToggle.disabled = true;
     downloadDebugLogButton.disabled = true;
     setBlocklistControlsDisabled(true);
@@ -244,11 +246,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             const local = await chrome.storage.local.get([
                 'autoPipOnTabSwitch',
                 'autoPipEnabled',
+                'pipButtonEnabled',
                 'autoPipSiteBlocklist',
                 'autoPipDebugEnabled',
                 'autoPipLatestBlocker'
             ]);
 
+            pipButtonEnabledToggle.checked = local.pipButtonEnabled !== false;
             autoPipDebugEnabledToggle.checked = local.autoPipDebugEnabled === true;
             renderDebugControls();
             renderAutoPipBlocker(local.autoPipLatestBlocker);
@@ -270,6 +274,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const result = await chrome.storage.sync.get([
                 'autoPipOnTabSwitch',
                 'autoPipEnabled',
+                'pipButtonEnabled',
                 'autoPipSiteBlocklist'
             ]);
 
@@ -280,6 +285,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                 typeof effective.autoPipOnTabSwitch === 'boolean'
                     ? effective.autoPipOnTabSwitch
                     : true;
+            pipButtonEnabledToggle.checked =
+                typeof effective.pipButtonEnabled === 'boolean'
+                    ? effective.pipButtonEnabled
+                    : pipButtonEnabledToggle.checked !== false;
 
             const syncBlocklist = normalizeBlocklist(effective.autoPipSiteBlocklist);
             const effectiveBlocklist = syncBlocklist || localBlocklist || DEFAULT_BLOCKED_SITES.slice();
@@ -294,6 +303,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             try {
                 await chrome.storage.local.set({
                     autoPipOnTabSwitch: autoPipOnTabSwitchToggle.checked,
+                    pipButtonEnabled: pipButtonEnabledToggle.checked,
                     autoPipSiteBlocklist: blockedSites,
                     autoPipDebugEnabled: autoPipDebugEnabledToggle.checked
                 });
@@ -331,6 +341,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
+    async function savePipButtonSetting() {
+        const enabled = pipButtonEnabledToggle.checked;
+        pipButtonEnabledToggle.disabled = true;
+
+        try {
+            await Promise.allSettled([
+                chrome.storage.sync.set({ pipButtonEnabled: enabled }),
+                chrome.storage.local.set({ pipButtonEnabled: enabled })
+            ]);
+
+            try {
+                chrome.runtime.sendMessage({
+                    type: 'pip_button_set_enabled',
+                    pipButtonEnabled: enabled
+                });
+            } catch (_) { }
+        } finally {
+            pipButtonEnabledToggle.disabled = false;
+        }
+    }
+
     async function saveDebugSetting() {
         const enabled = autoPipDebugEnabledToggle.checked;
         autoPipDebugEnabledToggle.disabled = true;
@@ -363,11 +394,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     await loadSettingsWithFallback();
     autoPipOnTabSwitchToggle.disabled = false;
+    pipButtonEnabledToggle.disabled = false;
     autoPipDebugEnabledToggle.disabled = false;
     renderDebugControls();
     setBlocklistControlsDisabled(false);
 
     autoPipOnTabSwitchToggle.addEventListener('change', saveSettings);
+    pipButtonEnabledToggle.addEventListener('change', savePipButtonSetting);
     autoPipDebugEnabledToggle.addEventListener('change', saveDebugSetting);
     downloadDebugLogButton.addEventListener('click', downloadDebugLog);
 

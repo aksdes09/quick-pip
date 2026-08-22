@@ -12,12 +12,14 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
+      "css": ["assets/pip-styles.css"],
       "js": [
         "scripts/lib/video.js",
         "scripts/lib/pip.js",
         "scripts/lib/settings.js",
         "scripts/utils.js",
-        "scripts/trigger-auto-pip.js"
+        "scripts/trigger-auto-pip.js",
+        "scripts/hover-pip-button.js"
       ],
       "run_at": "document_idle"
     }
@@ -39,7 +41,7 @@
   "host_permissions": ["<all_urls>"],
   "web_accessible_resources": [
     {
-      "resources": ["assets/*"],
+      "resources": ["assets/enter.svg", "assets/back.svg"],
       "matches": ["<all_urls>"]
     }
   ],

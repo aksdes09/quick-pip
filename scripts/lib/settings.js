@@ -68,7 +68,7 @@
 
     const readStorage = (area) => new Promise(resolve => {
         try {
-            area.get(['autoPipOnTabSwitch', 'autoPipSiteBlocklist'], (data) => resolve(data || null));
+            area.get(['autoPipOnTabSwitch', 'autoPipSiteBlocklist', 'pipButtonEnabled'], (data) => resolve(data || null));
         } catch (_) {
             resolve(null);
         }
@@ -78,13 +78,19 @@
         if (typeof chrome === 'undefined' || !chrome.storage) {
             return {
                 autoPipOnTabSwitch: true,
+                pipButtonEnabled: true,
                 autoPipSiteBlocklist: DEFAULT_BLOCKED_SITES
             };
         }
         const local = await readStorage(chrome.storage.local);
-        if (local && (typeof local.autoPipOnTabSwitch === 'boolean' || Array.isArray(local.autoPipSiteBlocklist))) {
+        if (local && (
+            typeof local.autoPipOnTabSwitch === 'boolean' ||
+            typeof local.pipButtonEnabled === 'boolean' ||
+            Array.isArray(local.autoPipSiteBlocklist)
+        )) {
             return {
                 autoPipOnTabSwitch: typeof local.autoPipOnTabSwitch === 'boolean' ? local.autoPipOnTabSwitch : true,
+                pipButtonEnabled: typeof local.pipButtonEnabled === 'boolean' ? local.pipButtonEnabled : true,
                 autoPipSiteBlocklist: normalizeBlocklist(local.autoPipSiteBlocklist) || DEFAULT_BLOCKED_SITES
             };
         }
@@ -92,6 +98,9 @@
         return {
             autoPipOnTabSwitch: sync && typeof sync.autoPipOnTabSwitch === 'boolean'
                 ? sync.autoPipOnTabSwitch
+                : true,
+            pipButtonEnabled: sync && typeof sync.pipButtonEnabled === 'boolean'
+                ? sync.pipButtonEnabled
                 : true,
             autoPipSiteBlocklist: normalizeBlocklist(sync && sync.autoPipSiteBlocklist) || DEFAULT_BLOCKED_SITES
         };
