@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#FFFFFF"><path d="M140-160q-24 0-42-18t-18-42v-300h60v300h680v-520H440v-60h380q24 0 42 18t18 42v520q0 24-18 42t-42 18H140Zm557-140 43-43-151-150h118v-60H487v220h60v-117l150 150ZM80-580v-220h300v220H80Zm400 100Z"/></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 48 48" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:2;">
+    <g transform="matrix(0.05,0,0,0.05,0,48)">
+        <path d="M140,-160C124,-160 110,-166 98,-178C86,-190 80,-204 80,-220L80,-450L140,-450L140,-220L480,-220L480,-160L140,-160ZM820,-440L820,-740L430,-740L430,-800L820,-800C836,-800 850,-794 862,-782C874,-770 880,-756 880,-740L880,-440L820,-440ZM540,-160L540,-380L880,-380L880,-160L540,-160Z" style="fill:white;"/>
+    </g>
+    <g transform="matrix(-1,-0,0,-1,20.85,28.85)">
+        <path d="M4,22L4,19L12.9,19L2.85,9L5,6.85L15,16.85L15,8L18,8L18,22L4,22Z" style="fill:white;"/>
+    </g>
+</svg>
