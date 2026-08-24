@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="assets/icon_border.svg"
+    <img src="assets/icon.png"
         title="Quick Picture-in-Picture" alt="Quick logo" width="120" />
     <h1>Quick Picture-in-Picture</h1>
     <p>
