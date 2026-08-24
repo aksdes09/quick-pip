@@ -6,6 +6,8 @@
         Improves the “Picture-in-Picture” viewing experience for Chromium-based browsers.
         <br>
         Adding a similar feature from Firefox.
+        <br>
+        Fork of https://github.com/apotenza92/chrome-auto-pip
     </p>
 </div>
 
