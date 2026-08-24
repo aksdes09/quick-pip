@@ -39,5 +39,3 @@ Show the PiP button inside video players.
 
 https://github.com/user-attachments/assets/716eda14-c1ad-46bf-ba88-e54a723971f2
 
-
-## Options
