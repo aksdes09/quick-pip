@@ -1,7 +1,7 @@
 <div align="center">
-    <img src="assets/icon.png"
-        title="Quick PiP" alt="Quick logo" width="120" />
-    <h1>Quick Pip</h1>
+    <img src="assets/icon_border.svg"
+        title="Quick Picture-in-Picture" alt="Quick logo" width="120" />
+    <h1>Quick Picture-in-Picture</h1>
     <p>
         Improves the “Picture-in-Picture” viewing experience for Chromium-based browsers.
         <br>
