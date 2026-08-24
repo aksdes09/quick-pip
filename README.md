@@ -4,6 +4,8 @@
     <h1>Quick Pip</h1>
     <p>
         Improves the “Picture-in-Picture” viewing experience for Chromium-based browsers.
+        <br>
+        Adding a similar feature from Firefox.
     </p>
 </div>
 
@@ -18,7 +20,7 @@
 > Some Chromium builds also require the site to be allowed to use Automatic Picture-in-Picture from the site information menu in the address bar.
 
 2. **Install the extension**
-- Download the latest release ZIP from: https://github.com/aksdes09/quick-pip/releases/tag/26.0
+- Download the latest [Release .zip](https://github.com/aksdes09/quick-pip/releases/tag/26.0)
 - Extract/unzip the downloaded file to a folder on your computer
 - Open browser and go to `about://extensions`
 - Enable **Developer mode** (toggle in the top right)
