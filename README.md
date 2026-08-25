@@ -43,3 +43,9 @@ Show the PiP button inside video players.
 
 https://github.com/user-attachments/assets/716eda14-c1ad-46bf-ba88-e54a723971f2
 
+## Options
+You can customize the extensions to suit your needs. If you don't want auto pip but want to keep the pip button, go to settings and turn off the features you don't need.
+
+<img width="491" height="738" alt="image" src="https://github.com/user-attachments/assets/1f1b54f3-e844-4ea0-b408-1ba2f763bebe" />
+
+
