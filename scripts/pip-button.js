@@ -15,8 +15,6 @@
     const HIDE_DELAY = 5000;
     const REVEAL_DISTANCE = 80;
 
-    // Chromium's own Picture-in-picture SVG paths from chrome/browser/resources/settings/icons.html.
-    // See Chromium source: https://chromium.googlesource.com/chromium/src/+/main/chrome/browser/resources/settings/icons.html
     const SVG_ENTER = `
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M4 20c-.55 0-1.02-.195-1.414-.586A1.935 1.935 0 0 1 2 18V6c0-.55.195-1.02.586-1.414C2.98 4.196 3.449 4 4 4h16c.55 0 1.02.195 1.414.586.39.394.586.863.586 1.414v12c0 .55-.195 1.02-.586 1.414-.394.39-.863.586-1.414.586Zm0-2h16V6H4Zm0 0V6Zm7-5h8V7h-8Zm2-2V9h4v2Zm0 0"></path>
@@ -67,10 +65,6 @@
             }
             .${BUTTON_CLASS}:active {
                 transform: scale(.96);
-            }
-            .${BUTTON_CLASS}:focus-visible {
-                outline: 1px solid #fff;
-                outline-offset: 1px;
             }
             .${BUTTON_CLASS}[data-pip-active="true"] {
                 background: rgba(0, 0, 0, 0.3);
