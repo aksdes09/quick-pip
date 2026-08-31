@@ -10,8 +10,7 @@
     const COMPAT_ATTR = 'data-auto-pip-compat-requested';
     const LAST_PLAYING_ATTR = 'data-auto-pip-last-playing-at';
     const NATIVE_MISS_CHECK_MS = 900;
-    const REARM_DELAY_MS = 100;
-    const LISTENER_VERSION = 7;
+    const LISTENER_VERSION = 9;
 
     const state = window.__auto_pip_page_state__ || {
         listenersRegistered: false,
@@ -25,7 +24,6 @@
         nativeMissToken: 0,
         nativeMissTimer: null,
         nativeMissReported: false,
-        rearmTimer: null,
         listenerVersion: 0
     };
     window.__auto_pip_page_state__ = state;
@@ -184,38 +182,11 @@
         }
     }
 
-    function scheduleAutoPiPRearm(reason) {
-        if (document.visibilityState !== 'visible' || isDisabled()) return;
-        const videos = getVideos();
-        const disarmedCount = videos.reduce((count, video) => (
-            disarmVideoForRearm(video) ? count + 1 : count
-        ), 0);
-        if (disarmedCount === 0) return;
-        debugLog('page_autopip_rearm_scheduled', { reason, disarmedCount });
-        if (state.rearmTimer) {
-            try { clearTimeout(state.rearmTimer); } catch (_) { }
-        }
-        state.rearmTimer = setTimeout(() => {
-            state.rearmTimer = null;
-            if (document.visibilityState !== 'visible' || isDisabled()) return;
-            updateRegistration({ forceLog: true });
-            debugLog('page_autopip_rearmed', { reason });
-        }, REARM_DELAY_MS);
-    }
-
     function syncVideo(video) {
         if (!video) return;
         if (isPlaying(video) && !isDisabled()) {
             try { video.setAttribute(LAST_PLAYING_ATTR, String(Date.now())); } catch (_) { }
             try {
-                if (!video.hasAttribute('autopictureinpicture')) {
-                    video.setAttribute('autopictureinpicture', '');
-                    video.setAttribute(ADDED_AUTOPIP_ATTR, '');
-                    debugLog('page_autopip_attr_added', {
-                        readyState: video.readyState,
-                        currentTime: video.currentTime
-                    });
-                }
                 video.setAttribute(OWNED_ATTR, '');
             } catch (_) { }
             return;
@@ -239,7 +210,6 @@
             video.addEventListener('enterpictureinpicture', () => notifyPiPState(true));
             video.addEventListener('leavepictureinpicture', () => {
                 notifyPiPState(false);
-                scheduleAutoPiPRearm('leavepictureinpicture');
             });
         } catch (_) { }
     }
@@ -520,7 +490,9 @@
                 connectVideoObserver('tab_visible');
                 updateRegistration({ forceLog: true });
                 if (visibleAfterNativeMiss) {
-                    scheduleAutoPiPRearm('visible_after_native_miss');
+                    debugLog('page_native_auto_pip_rearm_skipped', {
+                        reason: 'modern_media_session_autopip'
+                    });
                 }
             }
         }, true);

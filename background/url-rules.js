@@ -79,6 +79,7 @@
   }
 
   function isAutoPipAllowedUrl(url, patterns = AutoPip.state.autoPipSiteBlocklist) {
+    if (typeof url === 'string' && url.startsWith('file:')) return false;
     const hostname = getHostnameFromUrl(url);
     if (!hostname) return false;
     return !isHostBlocked(hostname, patterns);

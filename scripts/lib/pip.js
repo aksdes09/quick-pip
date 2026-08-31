@@ -75,20 +75,30 @@
 
         markOwned(video, {
             compat: options.compat === true,
-            ensureAutoPipAttr: options.ensureAutoPipAttr === true
+
+            ensureAutoPipAttr: false
+        });
+
+        const onLeave = () => {
+            try { video.removeAttribute(MARKERS.pip); } catch (_) { }
+            if (hadDisableAttr && options.allowDisablePictureInPictureOverride === true) {
+                try { video.setAttribute('disablePictureInPicture', ''); } catch (_) { }
+            }
+        };
+
+        try { video.addEventListener('leavepictureinpicture', onLeave, { once: true }); } catch (_) { }
+
+        markOwned(video, {
+            compat: options.compat === true,
+            ensureAutoPipAttr: false
         });
 
         try {
             await video.requestPictureInPicture();
             video.setAttribute(MARKERS.pip, 'true');
-            video.addEventListener('leavepictureinpicture', () => {
-                try { video.removeAttribute(MARKERS.pip); } catch (_) { }
-                if (hadDisableAttr && options.allowDisablePictureInPictureOverride === true) {
-                    try { video.setAttribute('disablePictureInPicture', ''); } catch (_) { }
-                }
-            }, { once: true });
             return true;
         } catch (error) {
+            try { video.removeEventListener('leavepictureinpicture', onLeave); } catch (_) { }
             if (hadDisableAttr && options.allowDisablePictureInPictureOverride === true) {
                 try { video.setAttribute('disablePictureInPicture', ''); } catch (_) { }
             }
