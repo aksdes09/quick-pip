@@ -21,7 +21,7 @@
 }
 
 .custom-pip-button:hover {
-  background-color: rgba(65, 65, 65, 0.35);
+  background-color: rgba(65, 65, 65, 0.4);
   outline-color: rgba(255, 255, 255, 0.9);
   outline-offset: 4px;
 }
