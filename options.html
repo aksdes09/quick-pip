@@ -64,10 +64,19 @@
             }
 
             .setting-title {
+                display: flex;
+                align-items: center;
+                gap: 6px;
                 font-size: 16px;
                 font-weight: 500;
                 color: #fff;
                 margin: 0 0 4px 0;
+            }
+
+            .setting-title-icon {
+                width: 24px;
+                height: 24px;
+                flex: 0 0 auto;
             }
 
             .setting-description {
@@ -325,7 +334,10 @@
 
             <div class="setting">
                 <div class="setting-info">
-                    <div class="setting-title">Debug Logs</div>
+                    <div class="setting-title">
+                        <img src="assets/debug.svg" alt="" class="setting-title-icon" />
+                        Debug Logs
+                    </div>
                     <div class="debug-actions">
                         <button class="button" id="downloadDebugLog">Download .txt</button>
                     </div>
