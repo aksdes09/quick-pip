@@ -13,7 +13,6 @@
     const tracked = new WeakMap();
     const wrappers = new Set();
     const HIDE_DELAY = 5000;
-    const REVEAL_DISTANCE = 80;
 
     const SVG_ENTER = `
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -257,14 +256,6 @@
     function updateAllStates() {
         videoLib.findVideos({ deep: true, minReadyState: 1, visibleOnly: false, playingFirst: true, includeDisabled: true })
             .forEach(video => updateState(video));
-    }
-
-    function isNearButton(button, x, y) {
-        const rect = button.getBoundingClientRect();
-        return x >= rect.left - REVEAL_DISTANCE &&
-            x <= rect.right + REVEAL_DISTANCE &&
-            y >= rect.top - REVEAL_DISTANCE &&
-            y <= rect.bottom + REVEAL_DISTANCE;
     }
 
     function handlePointerMove(event) {

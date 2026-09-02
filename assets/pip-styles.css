@@ -8,8 +8,8 @@
   height: 46px;
   border-radius: 50%;
 
-  background-color: rgba(0, 0, 0, 0.35);
-  outline: 2px solid rgba(255, 255, 255, 0.135);
+  background-color: rgba(0, 0, 0, 0.4);
+  outline: 2px solid rgba(255, 255, 255, 0.130);
 
   cursor: pointer;
   opacity: 0;

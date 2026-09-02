@@ -1,4 +1,3 @@
-const PROXIMITY_THRESHOLD = 150;
 const HIDE_TIMEOUT = 4000;
 
 let pipButtonEnabled = true;
@@ -75,23 +74,18 @@ function createPipButton(videoElement) {
     btn._hideTimer = hideTimer;
   };
 
-  playerContainer.addEventListener('mousemove', (e) => {
+  const revealButton = () => {
     if (!pipButtonEnabled) return;
+    showButton();
+  };
 
-    const rect = btn.getBoundingClientRect();
-    if (rect.width === 0) return;
-
-    const btnCenterX = rect.left + rect.width / 2;
-    const btnCenterY = rect.top + rect.height / 2;
-
-    const distance = Math.sqrt(
-      Math.pow(e.clientX - btnCenterX, 2) +
-      Math.pow(e.clientY - btnCenterY, 2)
-    );
-
-    if (distance <= PROXIMITY_THRESHOLD) {
-      showButton();
-    }
+  // Reveal when the cursor enters the player. Once the button has
+  // hidden, moving anywhere inside the player reveals it again.
+  // There is no longer any distance/proximity check against the button.
+  playerContainer.addEventListener('mouseenter', revealButton);
+  playerContainer.addEventListener('mousemove', () => {
+    if (!pipButtonEnabled) return;
+    if (btn.style.opacity !== '1') revealButton();
   });
 
   btn.addEventListener('click', async (e) => {
