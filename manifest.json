@@ -1,7 +1,7 @@
 {
   "name": "Quick PiP",
   "description": "Improves the “Picture-in-Picture” viewing experience for Chromium-based browsers.",
-  "version": "26.2",
+  "version": "26.2.1",
   "manifest_version": 3,
   "icons": {
     "128": "assets/icon.png"
